@@ -1,0 +1,25 @@
+{
+  "name": "forma-learning",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "dev": "node --watch --env-file-if-exists=.env server/index.js",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check server/index.js && node --check public/js/app.js",
+    "test:e2e": "playwright test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mammoth": "^1.9.1",
+    "multer": "^2.0.2",
+    "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1"
+  }
+}

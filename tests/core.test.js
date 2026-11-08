@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { hashPassword, verifyPassword, validateQuestions, grade, practiceQuestions } from '../server/core.js';
+test('password hashes are salted and only verify the original password',()=>{const hash=hashPassword('a-secure-password');assert.ok(verifyPassword('a-secure-password',hash));assert.equal(verifyPassword('wrong',hash),false);assert.notEqual(hashPassword('a-secure-password'),hash);assert.equal(verifyPassword('anything','invalid'),false);});
+test('question validation rejects invalid answers and option counts',()=>{const q={prompt:'A question?',options:['A','B','C','D'],answer:2};assert.equal(validateQuestions([q]).length,1);assert.throws(()=>validateQuestions([{...q,answer:4}]));assert.throws(()=>validateQuestions([{...q,options:['A']}])) ;assert.throws(()=>validateQuestions([]));});
+test('grading compares submitted indices with the private answer key',()=>{assert.equal(grade([{answer:2},{answer:1}],[2,0]),1);});
+test('practice questions retain a correct answer from source material',()=>{const text='Photosynthesis transforms sunlight into chemical energy inside the chloroplast. Mitochondria produce energy through cellular respiration in living organisms.';const qs=practiceQuestions(text,5);assert.ok(qs.length>0);for(const q of qs){assert.equal(q.options.length,4);assert.ok(text.includes(q.options[q.answer]));assert.ok(q.prompt.includes('________'));}assert.throws(()=>practiceQuestions('Too short.'));});

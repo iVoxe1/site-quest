@@ -15,6 +15,12 @@ npm start
 
 The server listens on port 3000 by default. `npm run dev` enables server watch mode. No build step is required. Do not commit `.env` or `.data`.
 
+## Website files and deployment
+
+Frontend files live directly at the repository root: `index.html`, `favicon.svg`, `css/`, and `js/`. The Node server serves these files explicitly and keeps server code, configuration, dependencies, and stored data private.
+
+Deploy the repository root to a Node.js host with `npm ci` as the install command and `npm start` as the start command. No build command is needed. Static-only hosting such as GitHub Pages cannot run the API required for accounts, document import, generation, tests, and results; those features need the Node server.
+
 ## Accounts and permissions
 
 - **Owner:** provisioned once from `OWNER_EMAIL` and `OWNER_PASSWORD` (12+ characters). There is no public Owner signup or role promotion. Use an email not already registered to a user. Once provisioned, credentials remain in the database; changing the environment variable does not reset the password.

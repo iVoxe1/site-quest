@@ -26,9 +26,16 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      # Publish frontend assets only; accounts and other API features need Node hosting.
+      - name: Prepare frontend files
+        run: |
+          mkdir -p "$RUNNER_TEMP/forma-pages"
+          cp index.html favicon.svg "$RUNNER_TEMP/forma-pages/"
+          cp -R css js "$RUNNER_TEMP/forma-pages/"
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ${{ runner.temp }}/forma-pages
 
       - id: deployment
         uses: actions/deploy-pages@v4
